@@ -1,0 +1,39 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Upload Page</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'core/upload.css'%}">
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>Socio</h1>
+			<nav>
+				<ul>
+					<li><a href="{%url 'index' %}">Home</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="#">Settings</a></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+        <h3>Upload a post</h3>
+		<section class="content">
+			<form action="{%url 'upload'%}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+				<div class="form-group">
+					<label for="image">Select an image:</label>
+					<input type="file" id="image" name="image">
+				</div>
+
+                <div class="form-group">
+					<label for="caption">Caption:</label>
+					<input type="text" id="caption" name="caption" placeholder="Enter a caption...">
+				</div>
+				<button type="submit">Upload</button>
+			</form>
+		</section>
+	</div>
+</body>
+</html>

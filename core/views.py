@@ -90,7 +90,14 @@ def settings(request):
 
 @login_required(login_url='signin') 
 def upload(request):
-    pass
+    if request.method=='POST':
+        image=request.FILES.get('image')
+        caption=request.POST.get('caption')
+        new_post=Post(user=Profile.objects.get(user=request.user),image=image,caption=caption)
+        new_post.save()
+        return redirect('index')
+    else:
+        return render(request,'core/upload.html')
 
 @login_required(login_url='signin') 
 def signout(request):
