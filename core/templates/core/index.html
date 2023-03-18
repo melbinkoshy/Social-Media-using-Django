@@ -1,0 +1,39 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Socio</title>
+	<link rel="stylesheet"  href="{% static 'core/index.css' %}">
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>Socio</h1>
+			<nav>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Profile</a></li>
+					<li><a href="{%url 'settings' %}">Settings</a></li>
+					<li><a href="{%url 'signout' %}">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+        
+		<section class="content">
+            {% for post in posts%}
+			<div class="post">
+				<h2>{{post.user}}</h2>
+				<div class="p-4">
+                    <div class="img-circle text-center mb-3">
+                        <img src="{{post.image.url}}" alt="{{post.caption}}" class="shadow">
+                    </div>
+                </div>
+				<a href="#">read more</a>
+			</div>
+            {% endfor %}
+			
+		</section>
+	</div>
+</body>
+</html>
