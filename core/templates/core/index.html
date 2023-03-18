@@ -12,9 +12,10 @@
 			<h1>Socio</h1>
 			<nav>
 				<ul>
-					<li><a href="#">Home</a></li>
+					
 					<li><a href="{%url 'profile' current_user.user %}">Profile</a></li>
-                    <li><a href="{%url 'upload' %}">upload</a></li>
+                    <li><a href="{%url 'chat:home' %}">Chat</a></li>
+                    <li><a href="{%url 'upload' %}">Upload</a></li>
 					<li><a href="{%url 'settings' %}">Settings</a></li>
 					<li><a href="{%url 'signout' %}">Logout</a></li>
 				</ul>
