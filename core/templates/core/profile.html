@@ -1,0 +1,41 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{requested_profile.user}}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'core/profile.css'%}">
+</head>
+<body>
+	<div class="container">
+		<header>
+			<h1>Socio</h1>
+			<nav>
+				<ul>
+					<li><a href="{% url 'index'%}">Home</a></li>
+					<li><a href="#">Settings</a></li>
+					<li><a href="#">Logout</a></li>
+				</ul>
+			</nav>
+		</header>
+		<section class="content">
+			<div class="user-info">
+				<img src="{{requested_profile.profileimg.url}}" alt="Profile picture">
+				<h2>{{requested_profile.firstname}} {{requested_profile.lastname}}</h2>
+				<p>@{{requested_profile.user}}</p>
+				
+			</div>
+			<div class="user-posts">
+				<h3>My Posts</h3>
+                {% for post in posts%}
+				<div class="post">
+					<img src="{{post.image.url}}" alt="Post image">
+					<p>{{post.caption.}}</p>
+				</div>
+                {%endfor%}
+				
+				<!-- Add more posts here -->
+			</div>
+		</section>
+	</div>
+</body>
+</html>

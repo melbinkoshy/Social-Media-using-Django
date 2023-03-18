@@ -103,3 +103,13 @@ def upload(request):
 def signout(request):
     logout(request)
     return render(request,'core/signin.html')
+
+@login_required(login_url='signin') 
+def profile(request,username):
+    requested_user=User.objects.get(username=username)
+    requested_profile=Profile.objects.get(user=requested_user)
+    posts=Post.objects.filter(user=requested_profile)
+    return render(request,'core/profile.html',{
+        'requested_profile':requested_profile,
+        'posts':posts
+    })
