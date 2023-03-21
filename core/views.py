@@ -122,9 +122,15 @@ def profile(request,username):
 def follow(request,username):
     current_user=Profile.objects.get(user=request.user)
     if request.method=='POST':
-        follower_list=Follower.objects.get(current_user=current_user)
+        following_list=Follower.objects.get(current_user=current_user)
         requested_user=User.objects.get(username=username)
+        #update follower
         requested_profile=Profile.objects.get(user=requested_user)
-        follower_list.following_user_id.add(requested_profile)
+        following_list.following_user_id.add(requested_profile)
+        following_list.save()
+        #update following
+        follower_list=Follower.objects.get(current_user=requested_profile)
+        follower_list.follower_user_id.add(current_user)
         follower_list.save()
-        
+        print('bhak')
+        return profile(request,username)
