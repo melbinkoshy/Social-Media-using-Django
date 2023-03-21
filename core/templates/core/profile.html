@@ -24,6 +24,10 @@
 				<p>@{{requested_profile.user}}</p>
 				
 			</div>
+			<form action="{%url 'follow' requested_profile.user %}" method="POST">
+				{% csrf_token%}
+				<button name="follow" type="submit">follow</button>
+			</form>
 			<div class="user-posts">
 				<h3>My Posts</h3>
                 {% for post in posts%}

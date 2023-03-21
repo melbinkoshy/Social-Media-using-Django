@@ -8,6 +8,6 @@ urlpatterns=[
     path('signin',views.signout,name='signout'),
     path('settings',views.settings,name='settings'),
     path('upload',views.upload,name='upload'),
-    path('user/<str:username>',views.profile,name='profile')
-
+    path('user/<str:username>',views.profile,name='profile'),
+    path('follow/<str:username>',views.follow,name='follow')
 ]

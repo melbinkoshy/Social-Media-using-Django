@@ -1,4 +1,4 @@
-from .models import Profile,Post
+from .models import Profile,Post,Follower
 from django.contrib.auth.models import User,auth
 from django.shortcuts import render,redirect
 from django.contrib import messages
@@ -13,6 +13,7 @@ def index(request):
         'current_user': current_user,
         'posts':posts
     })
+
 def signup(request):
     if request.method=='POST':
         username=request.POST['username']
@@ -34,6 +35,9 @@ def signup(request):
                 user_model=User.objects.get(username=username)
                 new_profile=Profile.objects.create(user=user_model,id_user=user_model.id)
                 new_profile.save()
+
+                #creating the follower model
+                Follower.objects.create(current_user=new_profile)
 
                 #login the user
                 login(request,user)
@@ -113,3 +117,14 @@ def profile(request,username):
         'requested_profile':requested_profile,
         'posts':posts
     })
+
+@login_required(login_url='signin') 
+def follow(request,username):
+    current_user=Profile.objects.get(user=request.user)
+    if request.method=='POST':
+        follower_list=Follower.objects.get(current_user=current_user)
+        requested_user=User.objects.get(username=username)
+        requested_profile=Profile.objects.get(user=requested_user)
+        follower_list.following_user_id.add(requested_profile)
+        follower_list.save()
+        

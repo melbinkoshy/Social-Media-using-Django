@@ -37,3 +37,10 @@ class Post(models.Model):
     
     def __str__(self):
         return self.user.firstname
+
+#follower model
+
+class Follower(models.Model):
+    current_user=models.ForeignKey('Profile',blank=True,on_delete=models.CASCADE,null=True)
+    following_user_id=models.ManyToManyField('Profile',blank=True,related_name='following')
+    follower_user_id=models.ManyToManyField('Profile',blank=True,related_name='followers')
