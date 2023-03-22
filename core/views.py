@@ -4,14 +4,23 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from itertools import chain
 # Create your views here.
-@login_required(login_url='signin') 
+
+@login_required(login_url='signup') 
 def index(request):
     current_user=Profile.objects.get(user=request.user)
+    follower_object=Follower.objects.get(current_user=current_user)
+    following_users=follower_object.following_user_id.all()
     posts=Post.objects.all()
+    feed=[]
+    for post in posts:
+       if post.user in following_users:
+           feed.append(post)
+           
     return render(request,'core/index.html',{
         'current_user': current_user,
-        'posts':posts
+        'posts':feed
     })
 
 def signup(request):
@@ -106,7 +115,7 @@ def upload(request):
 @login_required(login_url='signin') 
 def signout(request):
     logout(request)
-    return render(request,'core/signin.html')
+    return render(request,'core/signup.html')
 
 @login_required(login_url='signin') 
 def profile(request,username):
@@ -133,4 +142,6 @@ def follow(request,username):
         follower_list.follower_user_id.add(current_user)
         follower_list.save()
         print('bhak')
+        return profile(request,username)
+    else:
         return profile(request,username)

@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from chat.models import Room, Message
 from django.http import HttpResponse, JsonResponse
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout,get_user
+from core.models import Profile
 # Create your views here.
+@login_required(login_url='signin') 
 def home(request):
     return render(request, 'chat/home.html')
 
